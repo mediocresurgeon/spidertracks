@@ -25,6 +25,7 @@ class OuiDictionary(object):
         return OuiDictionary.__data.get("-".join(oui), None)
 
 
+    # Data taekn from https://linuxnet.ca/ieee/oui/
     __data: Dict[str, str] = {
         "E0-43-DB": "Shenzhen ViewAt Technology Co. Ltd",
         "24-05-F5": "Integrated Device Technology (Malaysia) Sdn. Bhd.",
