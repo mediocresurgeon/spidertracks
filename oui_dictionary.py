@@ -8827,7 +8827,6 @@ class OuiDictionary(object):
         "04-0A-E0": "Xmit AG Computer Networks",
         "08-00-16": "Barrister Info Sys Corp",
         "08-00-12": "Bell Atlantic Integrated Syst.",
-        "00-01-C8": "Conrad Corp.",
         "00-00-F9": "Quotron Systems Inc.",
         "00-00-BF": "Symmetric Computer Systems",
         "00-00-85": "Canon Inc.",

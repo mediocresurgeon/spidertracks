@@ -1,14 +1,15 @@
-from typing import List, Optional, Tuple
+from typing import Callable, List, Optional, Tuple
 from oui_dictionary import OuiDictionary
 
 
-class NetworkDevice():
+class NetworkDevice:
     """A physical device which has WiFi capabilities, such as a smartphone.
     """
 
     __mac_address: Tuple[str, str, str, str, str, str, str, str] = None
     __mfr_name: str = None
-    signal_strength: Optional[int] = None
+    __signal_strength: Optional[int] = None
+    __on_signal_strength_changed = list()
 
 
     def __init__(self, mac_address: str):
@@ -70,6 +71,41 @@ class NetworkDevice():
             str: The name of the manufacturer.
         """
         return self.__mfr_name
+
+
+    @property
+    def signal_strength(self) -> Optional[int]:
+        """Returns the signal strength of this `NetworkDevice`.
+
+        Returns:
+            Optional[int]: The signal strength.
+        """
+        return self.__signal_strength
+
+
+    @signal_strength.setter
+    def signal_strength(self, strength: Optional[int]):
+        """Sets the signal_strength value.
+        If this changes the value, this will trigger any callbacks
+        set by the on_signal_strength_changed() method.
+
+        Args:
+            strength (Optional[int]): The new signal strength.
+        """
+        if self.__signal_strength != strength:
+            original_strength = self.__signal_strength
+            self.__signal_strength = strength
+            for callback in self.__on_signal_strength_changed:
+                callback(self, original_strength)
+
+
+    def on_signal_strength_changed(self, callback: Callable[[object, Optional[int]], None]):
+        """Event handler for when the signal_strength value changes.
+
+        Args:
+            callback (Callable[[Optional[int], Optional[int]], None]): The function to call when the signal_strength changes. Second argument is the old value is the old signal strength.
+        """
+        self.__on_signal_strength_changed.append(callback)
 
 
 if "__main__" == __name__:
